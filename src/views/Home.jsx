@@ -1,40 +1,13 @@
 import { useEffect, useState } from "react";
 
 const featuredCats = [
-  { name: "Bob Doe", age: "3 months" },
-  { name: "Mittens", age: "2 months" },
-  { name: "Shadow", age: "5 months" },
-  { name: "Luna", age: "1 month" },
+  { name: "Bob Doe", age: "3 months", image: "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg" },
+  { name: "Mittens", age: "2 months", image: "https://cdn2.thecatapi.com/images/J2PmlIizw.jpg" },
+  { name: "Shadow", age: "5 months", image: "https://cdn2.thecatapi.com/images/MTY3ODMzNQ.jpg" },
+  { name: "Luna", age: "1 month", image: "https://cdn2.thecatapi.com/images/MjA1ODg5Ng.jpg" },
 ];
 
 export default function Home() {
-  const [cats, setCats] = useState([]);
-
-  useEffect(() => {
-    const fetchCatImages = async () => {
-      try {
-        const responses = await Promise.all(
-          featuredCats.map(() =>
-            fetch("https://api.thecatapi.com/v1/images/search").then((res) =>
-              res.json()
-            )
-          )
-        );
-
-        const catsWithImages = featuredCats.map((cat, index) => ({
-          ...cat,
-          image: responses[index] && responses[index][0] ? responses[index][0].url : '',
-        }));
-
-        setCats(catsWithImages);
-      } catch (error) {
-        console.error("Error fetching cat images:", error);
-      }
-    };
-
-    fetchCatImages();
-  }, []);
-
   return (
     <div>
       <section className="welcome">
@@ -50,11 +23,11 @@ export default function Home() {
         <h2>Featured Cats</h2>
 
         <div className="row">
-          {cats.map((cat, i) => (
+          {featuredCats.map((cat, i) => (
             <div key={i} className="col-md-3 col-sm-6 mb-4">
               <div className="featured-card">
                 <div className="card-box">
-                  {cat.image && <img src={cat.image} alt={cat.name} />}
+                  <img src={cat.image} alt={cat.name} />
                 </div>
                 <div className="card-info">
                   <strong>{cat.name}</strong>

@@ -1,56 +1,39 @@
 import { useEffect, useState } from "react";
 
 const catsData = [
-  { name: "Whiskers", age: 2, breed: "Persian" },
-  { name: "Mittens", age: 1, breed: "Bengal" },
-  { name: "Shadow", age: 3, breed: "Siamese" },
-  { name: "Pumpkin", age: 2, breed: "British Shorthair" },
-  { name: "Luna", age: 1, breed: "Sphynx" },
-  { name: "Oliver", age: 4, breed: "Peterbald" },
-  { name: "Bella", age: 2, breed: "Birman" },
-  { name: "Leo", age: 3, breed: "Abyssinian" },
-  { name: "Milo", age: 1, breed: "Persian" },
-  { name: "Simba", age: 2, breed: "Bengal" },
-  { name: "Nala", age: 3, breed: "Siamese" },
-  { name: "Coco", age: 1, breed: "Sphynx" }
+  { name: "Whiskers", age: 2, breed: "Persian", image: "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg" },
+  { name: "Mittens", age: 1, breed: "Bengal", image: "https://cdn2.thecatapi.com/images/J2PmlIizw.jpg" },
+  { name: "Shadow", age: 3, breed: "Siamese", image: "https://cdn2.thecatapi.com/images/MTY3ODMzNQ.jpg" },
+  { name: "Pumpkin", age: 2, breed: "British Shorthair", image: "https://cdn2.thecatapi.com/images/MjA1ODg5Ng.jpg" },
+  { name: "Luna", age: 1, breed: "Sphynx", image: "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg" },
+  { name: "Oliver", age: 4, breed: "Peterbald", image: "https://cdn2.thecatapi.com/images/J2PmlIizw.jpg" },
+  { name: "Bella", age: 2, breed: "Birman", image: "https://cdn2.thecatapi.com/images/MTY3ODMzNQ.jpg" },
+  { name: "Leo", age: 3, breed: "Abyssinian", image: "https://cdn2.thecatapi.com/images/MjA1ODg5Ng.jpg" },
+  { name: "Milo", age: 1, breed: "Persian", image: "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg" },
+  { name: "Simba", age: 2, breed: "Bengal", image: "https://cdn2.thecatapi.com/images/J2PmlIizw.jpg" },
+  { name: "Nala", age: 3, breed: "Siamese", image: "https://cdn2.thecatapi.com/images/MTY3ODMzNQ.jpg" },
+  { name: "Coco", age: 1, breed: "Sphynx", image: "https://cdn2.thecatapi.com/images/MjA1ODg5Ng.jpg" }
 ];
 
 export default function AvailableCats() {
-  const [cats, setCats] = useState([]);
+  const [cats, setCats] = useState(catsData);
   const [breeds, setBreeds] = useState([]);
   const [search, setSearch] = useState("");
   const [selectedBreed, setSelectedBreed] = useState("");
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Fetch breeds
-        const breedsResponse = await fetch("https://api.thecatapi.com/v1/breeds");
-        const breedsData = await breedsResponse.json();
-        setBreeds(breedsData);
-
-        // Fetch images for cats
-        const images = await Promise.all(
-          catsData.map(() =>
-            fetch("https://api.thecatapi.com/v1/images/search")
-              .then(res => res.json())
-          )
-        );
-
-        setCats(
-          catsData.map((cat, i) => ({
-            ...cat,
-            image: images[i] && images[i][0] ? images[i][0].url : '',
-          }))
-        );
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setCats(catsData); // Set without images
-        setBreeds([]); // No breeds
-      }
-    };
-
-    fetchData();
+    // Static breeds for now
+    const staticBreeds = [
+      { id: "abys", name: "Abyssinian" },
+      { id: "beng", name: "Bengal" },
+      { id: "birm", name: "Birman" },
+      { id: "bsho", name: "British Shorthair" },
+      { id: "pers", name: "Persian" },
+      { id: "siam", name: "Siamese" },
+      { id: "sphy", name: "Sphynx" },
+      { id: "pete", name: "Peterbald" }
+    ];
+    setBreeds(staticBreeds);
   }, []);
 
   const filteredCats = cats.filter(cat =>
