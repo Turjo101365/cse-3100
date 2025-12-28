@@ -36,20 +36,18 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="page-container">
-      <section className="hero">
-        <h2>
-          <u>Welcome to Purrfect Adoption</u>
-        </h2>
-        <p className="hero-text">
+    <div>
+      <section className="welcome">
+        <h2>Welcome to Purrfect Adoption</h2>
+        <p>
           At Purrfect Adoption, we believe every cat deserves a safe and loving
           home. Our mission is to connect wonderful cats with caring families
           through a simple and trusted adoption process.
         </p>
       </section>
 
-      <section className="section">
-        <h3 className="section-title">Featured Cats</h3>
+      <section>
+        <h2>Featured Cats</h2>
 
         <div className="featured-grid">
           {cats.map((cat, i) => (

@@ -5,14 +5,14 @@ const catsData = [
   { name: "Mittens", age: 1, breed: "Bengal" },
   { name: "Shadow", age: 3, breed: "Siamese" },
   { name: "Pumpkin", age: 2, breed: "British Shorthair" },
-  { name: "Luna", age: 1, breed: "Persian" },
-  { name: "Oliver", age: 4, breed: "Bengal" },
-  { name: "Bella", age: 2, breed: "Siamese" },
-  { name: "Leo", age: 3, breed: "Persian" },
-  { name: "Milo", age: 1, breed: "British Shorthair" },
+  { name: "Luna", age: 1, breed: "Sphynx" },
+  { name: "Oliver", age: 4, breed: "Peterbald" },
+  { name: "Bella", age: 2, breed: "Birman" },
+  { name: "Leo", age: 3, breed: "Abyssinian" },
+  { name: "Milo", age: 1, breed: "Persian" },
   { name: "Simba", age: 2, breed: "Bengal" },
   { name: "Nala", age: 3, breed: "Siamese" },
-  { name: "Coco", age: 1, breed: "Persian" }
+  { name: "Coco", age: 1, breed: "Sphynx" }
 ];
 
 export default function AvailableCats() {
@@ -52,10 +52,14 @@ export default function AvailableCats() {
             onChange={(e) => setSelectedBreed(e.target.value)}
           >
             <option value="">Select Breed</option>
+            <option>Sphynx</option>
+            <option>Peterbald</option>
+            <option>Birman</option>
+            <option>Abyssinian</option>
             <option>Persian</option>
             <option>Bengal</option>
-            <option>British Shorthair</option>
             <option>Siamese</option>
+            <option>British Shorthair</option>
           </select>
 
           <input
