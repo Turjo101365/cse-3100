@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const catsData = [
   { name: "Whiskers", age: 2, breed: "Persian", image: "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg" },
@@ -16,13 +16,12 @@ const catsData = [
 ];
 
 export default function AvailableCats() {
-  const [cats, setCats] = useState(catsData);
+  const [cats] = useState(catsData);
   const [breeds, setBreeds] = useState([]);
   const [search, setSearch] = useState("");
   const [selectedBreed, setSelectedBreed] = useState("");
 
   useEffect(() => {
-    // Static breeds for now
     const staticBreeds = [
       { id: "abys", name: "Abyssinian" },
       { id: "beng", name: "Bengal" },
@@ -42,50 +41,55 @@ export default function AvailableCats() {
   );
 
   return (
-    <>
-      <div className="cats-header">
-        <h2>Available Cats</h2>
+    <div className="container my-5">
+      <h2 className="text-center mb-4">Available Cats</h2>
 
-        <div className="filters d-flex gap-2">
-          <select
-            className="form-select"
-            value={selectedBreed}
-            onChange={(e) => setSelectedBreed(e.target.value)}
-          >
-            <option value="">All Breeds</option>
-            {breeds.map(breed => (
-              <option key={breed.id} value={breed.name}>{breed.name}</option>
-            ))}
-          </select>
+      {/* Filters */}
+      <div className="d-flex gap-2 justify-content-center mb-4 flex-wrap">
+        <select
+          className="form-select"
+          value={selectedBreed}
+          onChange={(e) => setSelectedBreed(e.target.value)}
+        >
+          <option value="">All Breeds</option>
+          {breeds.map(breed => (
+            <option key={breed.id} value={breed.name}>{breed.name}</option>
+          ))}
+        </select>
 
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Search by name"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Search by name"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
 
-          <button className="btn btn-primary">Search</button>
-        </div>
+        <button className="btn btn-primary" onClick={() => {}}>
+          Search
+        </button>
       </div>
 
       <hr />
 
+      {/* Cat cards */}
       <div className="row">
         {filteredCats.map((cat, i) => (
           <div key={i} className="col-md-3 col-sm-6 mb-4">
-            <div className="cat-card">
-              <img src={cat.image} alt={cat.name} />
-              <div className="cat-info">
-                <strong>{cat.name}</strong>
-                <span>Age: {cat.age}</span>
-                <span>Breed: {cat.breed}</span>
+            <div className="card h-100">
+              <img src={cat.image} alt={cat.name} className="card-img-top" />
+              <div className="card-body text-center">
+                <h5 className="card-title">{cat.name}</h5>
+                <p className="card-text">Age: {cat.age}</p>
+                <p className="card-text">Breed: {cat.breed}</p>
+                <button className="btn btn-outline-primary" onClick={() => alert(`You clicked on ${cat.name}`)}>
+                  Adopt Me
+                </button>
               </div>
             </div>
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 }

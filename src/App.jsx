@@ -18,6 +18,8 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/available-cats" element={<AvailableCats />} />
           <Route path="/contact" element={<Contact />} />
+          {/* Optional: fallback route */}
+          <Route path="*" element={<h2>Page Not Found</h2>} />
         </Route>
       </Routes>
     </Router>
