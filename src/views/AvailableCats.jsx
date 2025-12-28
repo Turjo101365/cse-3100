@@ -17,26 +17,40 @@ const catsData = [
 
 export default function AvailableCats() {
   const [cats, setCats] = useState([]);
+  const [breeds, setBreeds] = useState([]);
   const [search, setSearch] = useState("");
   const [selectedBreed, setSelectedBreed] = useState("");
 
   useEffect(() => {
-    Promise.all(
-      catsData.map(() =>
-        fetch("https://api.thecatapi.com/v1/images/search")
-          .then(res => res.json())
-      )
-    ).then(images => {
-      setCats(
-        catsData.map((cat, i) => ({
-          ...cat,
-          image: images[i] && images[i][0] ? images[i][0].url : '',
-        }))
-      );
-    }).catch(error => {
-      console.error("Error fetching cat images:", error);
-      setCats(catsData); // Set without images
-    });
+    const fetchData = async () => {
+      try {
+        // Fetch breeds
+        const breedsResponse = await fetch("https://api.thecatapi.com/v1/breeds");
+        const breedsData = await breedsResponse.json();
+        setBreeds(breedsData);
+
+        // Fetch images for cats
+        const images = await Promise.all(
+          catsData.map(() =>
+            fetch("https://api.thecatapi.com/v1/images/search")
+              .then(res => res.json())
+          )
+        );
+
+        setCats(
+          catsData.map((cat, i) => ({
+            ...cat,
+            image: images[i] && images[i][0] ? images[i][0].url : '',
+          }))
+        );
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setCats(catsData); // Set without images
+        setBreeds([]); // No breeds
+      }
+    };
+
+    fetchData();
   }, []);
 
   const filteredCats = cats.filter(cat =>
@@ -55,15 +69,10 @@ export default function AvailableCats() {
             value={selectedBreed}
             onChange={(e) => setSelectedBreed(e.target.value)}
           >
-            <option value="">Select Breed</option>
-            <option>Sphynx</option>
-            <option>Peterbald</option>
-            <option>Birman</option>
-            <option>Abyssinian</option>
-            <option>Persian</option>
-            <option>Bengal</option>
-            <option>Siamese</option>
-            <option>British Shorthair</option>
+            <option value="">All Breeds</option>
+            {breeds.map(breed => (
+              <option key={breed.id} value={breed.name}>{breed.name}</option>
+            ))}
           </select>
 
           <input
