@@ -23,7 +23,7 @@ export default function Home() {
 
         const catsWithImages = featuredCats.map((cat, index) => ({
           ...cat,
-          image: responses[index][0].url,
+          image: responses[index] && responses[index][0] ? responses[index][0].url : '',
         }));
 
         setCats(catsWithImages);
@@ -49,15 +49,17 @@ export default function Home() {
       <section>
         <h2>Featured Cats</h2>
 
-        <div className="featured-grid">
+        <div className="row">
           {cats.map((cat, i) => (
-            <div key={i} className="featured-card">
-              <div className="card-box">
-                {cat.image && <img src={cat.image} alt={cat.name} />}
-              </div>
-              <div className="card-info">
-                <strong>{cat.name}</strong>
-                <span>Age: {cat.age}</span>
+            <div key={i} className="col-md-3 col-sm-6 mb-4">
+              <div className="featured-card">
+                <div className="card-box">
+                  {cat.image && <img src={cat.image} alt={cat.name} />}
+                </div>
+                <div className="card-info">
+                  <strong>{cat.name}</strong>
+                  <span>Age: {cat.age}</span>
+                </div>
               </div>
             </div>
           ))}

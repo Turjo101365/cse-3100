@@ -30,9 +30,12 @@ export default function AvailableCats() {
       setCats(
         catsData.map((cat, i) => ({
           ...cat,
-          image: images[i][0].url,
+          image: images[i] && images[i][0] ? images[i][0].url : '',
         }))
       );
+    }).catch(error => {
+      console.error("Error fetching cat images:", error);
+      setCats(catsData); // Set without images
     });
   }, []);
 
@@ -46,8 +49,9 @@ export default function AvailableCats() {
       <div className="cats-header">
         <h2>Available Cats</h2>
 
-        <div className="filters">
+        <div className="filters d-flex gap-2">
           <select
+            className="form-select"
             value={selectedBreed}
             onChange={(e) => setSelectedBreed(e.target.value)}
           >
@@ -64,25 +68,28 @@ export default function AvailableCats() {
 
           <input
             type="text"
+            className="form-control"
             placeholder="Search by name"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
 
-          <button>Search</button>
+          <button className="btn btn-primary">Search</button>
         </div>
       </div>
 
       <hr />
 
-      <div className="cat-grid">
+      <div className="row">
         {filteredCats.map((cat, i) => (
-          <div key={i} className="cat-card">
-            <img src={cat.image} alt={cat.name} />
-            <div className="cat-info">
-              <strong>{cat.name}</strong>
-              <span>Age: {cat.age}</span>
-              <span>Breed: {cat.breed}</span>
+          <div key={i} className="col-md-3 col-sm-6 mb-4">
+            <div className="cat-card">
+              <img src={cat.image} alt={cat.name} />
+              <div className="cat-info">
+                <strong>{cat.name}</strong>
+                <span>Age: {cat.age}</span>
+                <span>Breed: {cat.breed}</span>
+              </div>
             </div>
           </div>
         ))}
